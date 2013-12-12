@@ -1,0 +1,31 @@
+//
+//  UIImageView+UIActivityIndicatorForSDWebImage.h
+//  UIActivityIndicator for SDWebImage
+//
+//  Created by Giacomo Saccardo.
+//  Modified by Adrien Long.
+//  Copyright (c) 2013 Giacomo Saccardo. All rights reserved.
+//  Copywrong (°_-) 2013 Adrien Long. All wrongs rejected.
+//
+
+#import <Foundation/Foundation.h>
+#import <SDWebImage/UIImageView+WebCache.h>
+#import <SDWebImage/SDImageCache.h>
+
+#import "DACircularProgressView.h"
+
+@interface UIImageView (DACircularProgressIndicatorForSDWebImage)
+
+@property (nonatomic, strong) DACircularProgressView *progressView;
+
+- (void)setImageWithURL:(NSURL *)url usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
+- (void)setImageWithURL:(NSURL *)url completed:(SDWebImageCompletedBlock)completedBlock usingActivityIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(SDWebImageCompletedBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options completed:(SDWebImageCompletedBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
+
+- (void)removeProgressIndicator;
+
+@end
