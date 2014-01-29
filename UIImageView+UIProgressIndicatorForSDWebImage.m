@@ -13,6 +13,9 @@
 
 static char TAG_PROGRESS_INDICATOR;
 
+static const CGFloat indicatorWidth = 40.0f;
+static const CGFloat indicatorHeight = 40.0f;
+
 @interface UIImageView (DACircularProgressIndicatorForSDWebImagePrivate)
 
 - (void)createActivityIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
@@ -34,16 +37,14 @@ static char TAG_PROGRESS_INDICATOR;
 - (void)createActivityIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor {
     
     if ([self progressView] == nil) {
-        self.progressView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(0.0f,0.0f, 40.0f, 40.0f)];
-        
-        self.progressView.autoresizingMask = UIViewAutoresizingNone;
         
         //calculate the correct position
-        float width = self.progressView.frame.size.width;
-        float height = self.progressView.frame.size.height;
-        float x = (self.frame.size.width / 2.0) - width/2;
-        float y = (self.frame.size.height / 2.0) - height/2;
-        self.progressView.frame = CGRectMake(x, y, width, height);
+        float x = CGRectGetMidX(self.frame) - indicatorWidth/2;
+        float y = CGRectGetMidY(self.frame) - indicatorHeight/2;
+        
+        self.progressView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(x, y, indicatorWidth, indicatorHeight)];
+        
+        self.progressView.autoresizingMask = UIViewAutoresizingNone;
         
 //        self.progressView.hidesWhenStopped = YES;
         self.progressView.roundedCorners = YES;
