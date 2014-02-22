@@ -75,6 +75,8 @@ static const CGFloat indicatorHeight = 40.0f;
 
 #pragma mark - Methods
 
+
+
 - (void)setImageWithURL:(NSURL *)url usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor {
     
     [self createActivityIndicatorWithProgressTintColor:progressTintColor andTrackTintColor:trackTintColor];
