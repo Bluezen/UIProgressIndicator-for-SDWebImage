@@ -85,7 +85,7 @@ static const CGFloat indicatorHeight = 40.0f;
     [self setImageWithURL:url
          placeholderImage:nil
                   options:0
-                 progress:^(NSUInteger receivedSize, long long expectedSize) {
+                 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                  }
@@ -103,7 +103,7 @@ static const CGFloat indicatorHeight = 40.0f;
     [self setImageWithURL:url
          placeholderImage:placeholder
                   options:0
-                 progress:^(NSUInteger receivedSize, long long expectedSize) {
+                 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                  }
@@ -122,7 +122,7 @@ static const CGFloat indicatorHeight = 40.0f;
     [self setImageWithURL:url
          placeholderImage:placeholder
                   options:options
-                 progress:^(NSUInteger receivedSize, long long expectedSize) {
+                 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                  }
@@ -140,7 +140,7 @@ static const CGFloat indicatorHeight = 40.0f;
     [self setImageWithURL:url
          placeholderImage:nil
                   options:0
-                 progress:^(NSUInteger receivedSize, long long expectedSize) {
+                 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                  }
@@ -159,7 +159,7 @@ static const CGFloat indicatorHeight = 40.0f;
     [self setImageWithURL:url
          placeholderImage:placeholder
                   options:0
-                 progress:^(NSUInteger receivedSize, long long expectedSize) {
+                 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                  }
@@ -178,7 +178,7 @@ static const CGFloat indicatorHeight = 40.0f;
     [self setImageWithURL:url
          placeholderImage:placeholder
                   options:options
-                 progress:^(NSUInteger receivedSize, long long expectedSize) {
+                 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                  }
@@ -198,7 +198,7 @@ static const CGFloat indicatorHeight = 40.0f;
     [self setImageWithURL:url
          placeholderImage:placeholder
                   options:options
-                 progress:^(NSUInteger receivedSize, long long expectedSize) {
+                 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                      progressBlock(receivedSize,expectedSize);
