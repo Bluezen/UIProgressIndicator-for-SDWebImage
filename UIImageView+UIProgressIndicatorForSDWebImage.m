@@ -36,41 +36,61 @@ static const CGFloat indicatorHeight = 40.0f;
 
 - (void)createActivityIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor {
     
-    if ([self progressView] == nil) {
+    if ( ! self.progressView ) {
         
-        //calculate the correct position
-        float x = CGRectGetMidX(self.frame) - indicatorWidth/2;
-        float y = CGRectGetMidY(self.frame) - indicatorHeight/2;
+        self.progressView = [DACircularProgressView new];
+
+        [self updateProgressViewFrame];
         
-        self.progressView = [[DACircularProgressView alloc] initWithFrame:CGRectMake(x, y, indicatorWidth, indicatorHeight)];
-        
-        self.progressView.autoresizingMask = UIViewAutoresizingNone;
+        self.progressView.autoresizingMask =  (UIViewAutoresizingFlexibleLeftMargin   |
+                                               UIViewAutoresizingFlexibleRightMargin  |
+                                               UIViewAutoresizingFlexibleTopMargin    |
+                                               UIViewAutoresizingFlexibleBottomMargin);
         
 //        self.progressView.hidesWhenStopped = YES;
         self.progressView.roundedCorners = YES;
         self.progressView.trackTintColor = trackTintColor;
         self.progressView.progressTintColor = progressTintColor;
 //        self.progressView.thicknessRatio = 1.0f;
-        [self addSubview:self.progressView];
+        dispatch_async(dispatch_get_main_queue(), ^(void) {
+            [self addSubview:self.progressView];
+        });
     }
     
 }
 
+-(void)updateProgressViewFrame
+{    
+    //calculate the correct position
+    float x = CGRectGetMidX(self.bounds) - (indicatorWidth / 2.0f);
+    float y = CGRectGetMidY(self.bounds) - (indicatorHeight / 2.0f);
+    
+    CGRect progressViewFrame = CGRectMake(x, y, indicatorWidth, indicatorHeight);
+    
+    self.progressView.frame = progressViewFrame;
+}
+
 - (void)removeProgressIndicator {
-    if ([self progressView]) {
-        [[self progressView] setHidden:YES];
-        [[self progressView] removeFromSuperview];
+    if (self.progressView) {
+        [self.progressView removeFromSuperview];
         self.progressView = nil;
     }
 }
 
 -(void)updateProgress:(CGFloat)progress
 {
-    [self.progressView setProgress:progress animated:YES];
-    
-    if (self.progressView.progress >= 1.0f ) {
-        [self.progressView setHidden:YES];
-    }
+    dispatch_async(dispatch_get_main_queue(), ^(void) {
+        //
+        // Yeah... we should observe change of layout on UIImageView
+        // instead of redrawing here... but that will do for now. (don't spit on me)
+        [self updateProgressViewFrame];
+        
+        [self.progressView setProgress:progress animated:YES];
+        
+        if (self.progressView.progress >= 1.0f ) {
+            [self.progressView setHidden:YES];
+        }
+    });
 }
 
 #pragma mark - Methods
