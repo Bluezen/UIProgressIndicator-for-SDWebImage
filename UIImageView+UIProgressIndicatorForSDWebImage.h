@@ -12,7 +12,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import <SDWebImage/SDImageCache.h>
 
-#import "DACircularProgressView.h"
+#import <DACircularProgress/DACircularProgressView.h>
 
 @interface UIImageView (DACircularProgressIndicatorForSDWebImage)
 
