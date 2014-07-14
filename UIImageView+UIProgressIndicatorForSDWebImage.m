@@ -102,14 +102,14 @@ static const CGFloat indicatorHeight = 40.0f;
     [self createActivityIndicatorWithProgressTintColor:progressTintColor andTrackTintColor:trackTintColor];
     
     __weak typeof(self) weakSelf = self;
-    [self setImageWithURL:url
+    [self sd_setImageWithURL:url
          placeholderImage:nil
                   options:0
                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                  }
-                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                     [weakSelf removeProgressIndicator];
                 }
      ];
@@ -120,15 +120,14 @@ static const CGFloat indicatorHeight = 40.0f;
     [self createActivityIndicatorWithProgressTintColor:progressTintColor andTrackTintColor:trackTintColor];
     
     __weak typeof(self) weakSelf = self;
-    [self setImageWithURL:url
+    [self sd_setImageWithURL:url
          placeholderImage:placeholder
                   options:0
                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                  }
-
-                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                     [weakSelf removeProgressIndicator];
                 }
      ];
@@ -139,94 +138,93 @@ static const CGFloat indicatorHeight = 40.0f;
     [self createActivityIndicatorWithProgressTintColor:progressTintColor andTrackTintColor:trackTintColor];
     
     __weak typeof(self) weakSelf = self;
-    [self setImageWithURL:url
+    [self sd_setImageWithURL:url
          placeholderImage:placeholder
                   options:options
                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                  }
-                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
+                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
                     [weakSelf removeProgressIndicator];
                 }
      ];
 }
 
-- (void)setImageWithURL:(NSURL *)url completed:(SDWebImageCompletedBlock)completedBlock usingActivityIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor {
+- (void)setImageWithURL:(NSURL *)url completed:(SDWebImageCompletionBlock)completedBlock usingActivityIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor {
     
     [self createActivityIndicatorWithProgressTintColor:progressTintColor andTrackTintColor:trackTintColor];
     
     __weak typeof(self) weakSelf = self;
-    [self setImageWithURL:url
+    [self sd_setImageWithURL:url
          placeholderImage:nil
                   options:0
                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                  }
-                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                    completedBlock(image, error, cacheType);
+                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                    completedBlock(image, error, cacheType, imageURL);
                     [weakSelf removeProgressIndicator];
                 }
      ];
 }
 
-- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(SDWebImageCompletedBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor {
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(SDWebImageCompletionBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor {
     
     [self createActivityIndicatorWithProgressTintColor:progressTintColor andTrackTintColor:trackTintColor];
     
     __weak typeof(self) weakSelf = self;
-    [self setImageWithURL:url
+    [self sd_setImageWithURL:url
          placeholderImage:placeholder
                   options:0
                  progress:^(NSInteger receivedSize, NSInteger expectedSize) {
                      CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
                      [weakSelf updateProgress:progress];
                  }
-                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                    completedBlock(image, error, cacheType);
+                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                    completedBlock(image, error, cacheType, imageURL);
                     [weakSelf removeProgressIndicator];
                 }
      ];
 }
 
-- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options completed:(SDWebImageCompletedBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor {
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options completed:(SDWebImageCompletionBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor {
     
     [self createActivityIndicatorWithProgressTintColor:progressTintColor andTrackTintColor:trackTintColor];
     
     __weak typeof(self) weakSelf = self;
-    [self setImageWithURL:url
-         placeholderImage:placeholder
-                  options:options
-                 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                     CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
-                     [weakSelf updateProgress:progress];
-                 }
-
-                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                    completedBlock(image, error, cacheType);
-                    [weakSelf removeProgressIndicator];
-                }
+    [self sd_setImageWithURL:url
+            placeholderImage:placeholder
+                     options:options
+                    progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                        CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
+                        [weakSelf updateProgress:progress];
+                    }
+                   completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                       completedBlock(image, error, cacheType, imageURL);
+                       [weakSelf removeProgressIndicator];
+                   }
      ];
 }
 
-- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletedBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor {
+- (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor {
     
     [self createActivityIndicatorWithProgressTintColor:progressTintColor andTrackTintColor:trackTintColor];
     
     __weak typeof(self) weakSelf = self;
-    [self setImageWithURL:url
-         placeholderImage:placeholder
-                  options:options
-                 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-                     CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
-                     [weakSelf updateProgress:progress];
-                     progressBlock(receivedSize,expectedSize);
-                 }
-                completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType) {
-                    completedBlock(image, error, cacheType);
-                    [weakSelf removeProgressIndicator];
-                }
+    [self sd_setImageWithURL:url
+            placeholderImage:placeholder
+                     options:options
+                    progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+                        CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
+                        [weakSelf updateProgress:progress];
+                        progressBlock(receivedSize,expectedSize);
+                    }
+                   completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                       completedBlock(image, error, cacheType, imageURL);
+                       [weakSelf removeProgressIndicator];
+                   }
      ];
 }
 
