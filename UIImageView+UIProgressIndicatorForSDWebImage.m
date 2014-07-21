@@ -156,6 +156,7 @@ static const CGFloat indicatorHeight = 40.0f;
     [self createActivityIndicatorWithProgressTintColor:progressTintColor andTrackTintColor:trackTintColor];
     
     __weak typeof(self) weakSelf = self;
+    
     [self sd_setImageWithURL:url
          placeholderImage:nil
                   options:0
@@ -164,7 +165,9 @@ static const CGFloat indicatorHeight = 40.0f;
                      [weakSelf updateProgress:progress];
                  }
                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                    completedBlock(image, error, cacheType, imageURL);
+                    if (completedBlock != nil) {
+                        completedBlock(image, error, cacheType, imageURL);
+                    }
                     [weakSelf removeProgressIndicator];
                 }
      ];
@@ -183,7 +186,9 @@ static const CGFloat indicatorHeight = 40.0f;
                      [weakSelf updateProgress:progress];
                  }
                 completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                    completedBlock(image, error, cacheType, imageURL);
+                    if (completedBlock != nil) {
+                        completedBlock(image, error, cacheType, imageURL);
+                    }
                     [weakSelf removeProgressIndicator];
                 }
      ];
@@ -202,7 +207,9 @@ static const CGFloat indicatorHeight = 40.0f;
                         [weakSelf updateProgress:progress];
                     }
                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                       completedBlock(image, error, cacheType, imageURL);
+                       if (completedBlock != nil) {
+                           completedBlock(image, error, cacheType, imageURL);
+                       }
                        [weakSelf removeProgressIndicator];
                    }
      ];
@@ -222,11 +229,45 @@ static const CGFloat indicatorHeight = 40.0f;
                         progressBlock(receivedSize,expectedSize);
                     }
                    completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-                       completedBlock(image, error, cacheType, imageURL);
+                       if (completedBlock != nil) {
+                           completedBlock(image, error, cacheType, imageURL);
+                       }
                        [weakSelf removeProgressIndicator];
                    }
      ];
 }
+
+-(void)downloadImageWithURL:(NSURL *)url
+           placeholderImage:(UIImage *)placeholder
+                  completed:(SDWebImageCompletionBlock)completedBlock
+usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor
+          andTrackTintColor:(UIColor *)trackTintColor
+{
+    self.image = placeholder;
+    
+    [self createActivityIndicatorWithProgressTintColor:progressTintColor andTrackTintColor:trackTintColor];
+    
+    __weak typeof(self) weakSelf = self;
+    
+    [SDWebImageManager.sharedManager
+     downloadImageWithURL:url
+     options:SDWebImageContinueInBackground
+     progress:^(NSInteger receivedSize, NSInteger expectedSize)
+     {
+         CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
+         [weakSelf updateProgress:progress];
+         
+     }
+     completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
+     {
+         completedBlock(image, error, cacheType, imageURL);
+         
+         [weakSelf removeProgressIndicator];
+         
+     }];
+
+}
+
 
 
 @end
