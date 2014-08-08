@@ -251,7 +251,7 @@ usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor
     
     [SDWebImageManager.sharedManager
      downloadImageWithURL:url
-     options:SDWebImageContinueInBackground
+     options:SDWebImageContinueInBackground|SDWebImageTransformAnimatedImage
      progress:^(NSInteger receivedSize, NSInteger expectedSize)
      {
          CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
@@ -260,7 +260,10 @@ usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor
      }
      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
      {
-         completedBlock(image, error, cacheType, imageURL);
+         if([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
+         {
+             completedBlock(image, error, cacheType, imageURL);
+         }
          
          [weakSelf removeProgressIndicator];
          
