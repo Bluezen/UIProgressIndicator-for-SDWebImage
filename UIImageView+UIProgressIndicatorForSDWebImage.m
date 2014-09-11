@@ -60,14 +60,16 @@ static const CGFloat indicatorHeight = 40.0f;
 }
 
 -(void)updateProgressViewFrame
-{    
-    //calculate the correct position
-    float x = CGRectGetMidX(self.bounds) - (indicatorWidth / 2.0f);
-    float y = CGRectGetMidY(self.bounds) - (indicatorHeight / 2.0f);
-    
-    CGRect progressViewFrame = CGRectMake(x, y, indicatorWidth, indicatorHeight);
-    
-    self.progressView.frame = progressViewFrame;
+{
+    if (self.progressView) {
+        //calculate the correct position
+        float x = CGRectGetMidX(self.bounds) - (indicatorWidth / 2.0f);
+        float y = CGRectGetMidY(self.bounds) - (indicatorHeight / 2.0f);
+        
+        CGRect progressViewFrame = CGRectMake(x, y, indicatorWidth, indicatorHeight);
+        
+        self.progressView.frame = progressViewFrame;
+    }
 }
 
 - (void)removeProgressIndicator {
@@ -80,10 +82,6 @@ static const CGFloat indicatorHeight = 40.0f;
 -(void)updateProgress:(CGFloat)progress
 {
     dispatch_async(dispatch_get_main_queue(), ^(void) {
-        //
-        // Yeah... we should observe change of layout on UIImageView
-        // instead of redrawing here... but that will do for now. (don't spit on me)
-        [self updateProgressViewFrame];
         
         [self.progressView setProgress:progress animated:YES];
         
@@ -91,6 +89,13 @@ static const CGFloat indicatorHeight = 40.0f;
             [self.progressView setHidden:YES];
         }
     });
+}
+
+-(void)layoutSubviews
+{
+    [super layoutSubviews];
+    
+    [self updateProgressViewFrame];
 }
 
 #pragma mark - Methods
