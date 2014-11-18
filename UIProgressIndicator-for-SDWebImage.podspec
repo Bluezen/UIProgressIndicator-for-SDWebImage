@@ -22,8 +22,7 @@ Pod::Spec.new do |s|
     'UIProgressIndicator-for-SDWebImage' => ['Pod/Assets/*.png']
   }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  s.frameworks = 'UIImage'
+  # s.frameworks = 'QuartzCore'
   s.dependency 'DACircularProgress', '~> 2.0'
   s.dependency 'SDWebImage', '~> 3.7.1'
 end
