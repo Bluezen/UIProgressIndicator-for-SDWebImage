@@ -8,6 +8,12 @@ BASED ON ORIGINAL WORK => [UIActivityIndicator-for-SDWebImage](https://github.co
 Installation
 -----------
 
+**CocoaPods**
+```
+pod 'UIProgressIndicator-for-SDWebImage', :git => 'https://github.com/Bluezen/UIProgressIndicator-for-SDWebImage.git'
+```
+
+**Manual**
 Copy the class (.h and .m) into your application. 
 
 
@@ -35,7 +41,7 @@ So all the methods available are:
 
 /// The image is NOT SET for you on completion of the image download, you have to manually set it to the imageView
 -(void)downloadImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
-``
+```
 
 
 **Remove the activity indicator**
