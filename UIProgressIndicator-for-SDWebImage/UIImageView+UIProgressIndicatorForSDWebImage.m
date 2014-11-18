@@ -2,10 +2,8 @@
 //  UIImageView+UIActivityIndicatorForSDWebImage.m
 //  UIActivityIndicator for SDWebImage
 //
-//  Created by Giacomo Saccardo.
-//  Modified by Adrien Long.
-//  Copyright (c) 2013 Giacomo Saccardo. All rights reserved.
-//  Copywrong (°_-) 2013 Adrien Long. All wrongs rejected.
+//  Created by Adrien Long.
+//  Copyright (c) 2014 Adrien Long. All rights reserved.
 //
 
 #import "UIImageView+UIProgressIndicatorForSDWebImage.h"
@@ -244,6 +242,8 @@ static const CGFloat indicatorHeight = 40.0f;
 
 -(void)downloadImageWithURL:(NSURL *)url
            placeholderImage:(UIImage *)placeholder
+                    options:(SDWebImageOptions)options
+                   progress:(SDWebImageDownloaderProgressBlock)progressBlock
                   completed:(SDWebImageCompletionBlock)completedBlock
 usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor
           andTrackTintColor:(UIColor *)trackTintColor
@@ -256,17 +256,18 @@ usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor
     
     [SDWebImageManager.sharedManager
      downloadImageWithURL:url
-     options:SDWebImageContinueInBackground|SDWebImageTransformAnimatedImage
+     options:options
      progress:^(NSInteger receivedSize, NSInteger expectedSize)
      {
          CGFloat progress = ((CGFloat)receivedSize)/((CGFloat)expectedSize);
          [weakSelf updateProgress:progress];
-         
+         if (progressBlock != nil) {
+             progressBlock(receivedSize,expectedSize);
+         }
      }
      completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
      {
-         if([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive)
-         {
+         if (completedBlock != nil) {
              completedBlock(image, error, cacheType, imageURL);
          }
          

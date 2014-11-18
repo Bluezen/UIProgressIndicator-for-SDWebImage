@@ -2,10 +2,8 @@
 //  UIImageView+UIActivityIndicatorForSDWebImage.h
 //  UIActivityIndicator for SDWebImage
 //
-//  Created by Giacomo Saccardo.
-//  Modified by Adrien Long.
-//  Copyright (c) 2013 Giacomo Saccardo. All rights reserved.
-//  Copywrong (°_-) 2013 Adrien Long. All wrongs rejected.
+//  Created by Adrien Long.
+//  Copyright (c) 2014 Adrien Long. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -27,7 +25,7 @@
 - (void)setImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
 
 /// The image is NOT SET for you on completion of the image download, you can perform checks in completedBlock before asigning it to the imageView
--(void)downloadImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder completed:(SDWebImageCompletionBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
+-(void)downloadImageWithURL:(NSURL *)url placeholderImage:(UIImage *)placeholder options:(SDWebImageOptions)options progress:(SDWebImageDownloaderProgressBlock)progressBlock completed:(SDWebImageCompletionBlock)completedBlock usingProgressIndicatorWithProgressTintColor:(UIColor *)progressTintColor andTrackTintColor:(UIColor *)trackTintColor;
 
 - (void)removeProgressIndicator;
 
